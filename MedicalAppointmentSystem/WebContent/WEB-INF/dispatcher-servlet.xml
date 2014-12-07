@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"	
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       
+       
+    <!-- datasource -->
+  <bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:tcp://localhost/~/test" />
+		<property name="username" value="sa"/>
+		<property name="password" value="" />
+		
+	</bean>
+
+
+    <!-- template -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+   
+    <!-- mapping -->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+            	<prop key="patientsum.htm">patientSumController</prop>
+            	<prop key="patientsumForNormalUser.htm">patientController</prop>
+            	<prop key="schedule.htm">patientController</prop>
+                <prop key="addPatient.htm">patientController</prop>
+                <prop key="savePatient.htm">patientController</prop>
+                <prop key="projdetail.htm">patientController</prop>
+                <prop key="resources.htm">patientController</prop>
+                <prop key="saveResource.htm">resourceController</prop>
+                <prop key="validateUser.htm">resourceController</prop>
+                <prop key="saveSchedule.htm">patientController</prop>
+                <prop key="displayPatientsInfo.htm">patientController</prop>
+                <prop key="searchPatient.htm">patientController</prop>                
+            </props>
+        </property>
+    </bean>
+
+    <!-- The view resolver -->
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp" />
+
+   <!--  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5242880" />
+    </bean>  -->
+    
+    <!--Model  -->
+    <bean id="patientDetailsDo" class="com.nova.is.mas.model.PatientDetailsDO" />
+    <bean id="loginDo" class="com.nova.is.mas.model.LoginDO" />
+    <!-- DAOs -->
+	<bean id="patientDAO" class="com.nova.is.mas.daoimpl.PatientDAOImpl" />
+	<bean id="resourceDAO" class="com.nova.is.mas.daoimpl.ResourceDAOImpl" />
+	
+	<!-- Services  -->
+	<bean id="patientServices" class="com.nova.is.mas.services.PatientServices" >
+		<property name="patientDAO" ref="patientDAOImpl"/>
+	</bean>
+	<bean id="resourceServices" class="com.nova.is.mas.services.ResourceServices">
+		<property name="resourceDAO" ref="resourceDAOImpl"/>
+	</bean>
+	
+	<bean id="patientDAOImpl" class="com.nova.is.mas.daoimpl.PatientDAOImpl">
+		<!-- setter based injection -->
+		<property name="jdbcTemplate" ref ="jdbcTemplate"/>
+	</bean>
+	<bean id="resourceDAOImpl" class="com.nova.is.mas.daoimpl.ResourceDAOImpl">
+		<!-- setter based injection -->
+		<property name="jdbcTemplate" ref ="jdbcTemplate"/>
+	</bean>
+	
+    
+
+    <!-- controller -->
+    <bean id="patientSumController" class="com.nova.is.mas.controller.PatientSumController">
+	  <property name="patientServices" ref="patientServices"/>
+    </bean>
+
+    <bean id="patientController" class="com.nova.is.mas.controller.PatientController">
+        <property name="patientServices" ref="patientServices"/>
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+                <property name="mappings">
+                    <props>
+                        <prop key="/addPatient.htm">addPatient</prop>
+                        <prop key="/savePatient.htm">savePatient</prop>
+                        <prop key="/projdetail.htm">projDetail</prop>
+                        <prop key="/resources.htm">getResources</prop>
+                        <prop key="/patientsumForNormalUser.htm">patientsumForNormalUser</prop>
+                        <prop key="/schedule.htm">scheduleAppointment</prop>
+                        <prop key="/saveSchedule.htm">saveSchedule</prop>
+                        <prop key="/displayPatientsInfo.htm">displayPatientsInfo</prop>
+                        <prop key="/searchPatient.htm">searchPatient</prop>                       
+                    </props>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="resourceController" class="com.nova.is.mas.controller.ResourceController">
+        <property name="resourceServices" ref="resourceServices"/>
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+                <property name="mappings">
+                    <props>
+                        <prop key="/saveResource.htm">saveResource</prop>
+                        <prop key="/validateUser.htm">validateUser</prop>                                                
+                    </props>
+                </property>
+            </bean>
+        </property>
+    </bean>
+</beans>

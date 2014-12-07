@@ -1,0 +1,17 @@
+com\nova\is\mas\mapper\PhysicianMapper.class
+com\nova\is\mas\controller\PatientController.class
+com\nova\is\mas\controller\PatientSumController.class
+com\nova\is\mas\dao\PatientDAO.class
+com\nova\is\mas\model\PatientDetailsDO.class
+com\nova\is\mas\mapper\PatientDetailsRowMapper.class
+com\nova\is\mas\services\PatientServices.class
+com\nova\is\mas\daoimpl\PatientDAOImpl.class
+com\nova\is\mas\model\PhysicianDO.class
+com\nova\is\mas\controller\ResourceController.class
+com\nova\is\mas\daoimpl\ResourceDAOImpl.class
+com\nova\is\mas\model\AppointmentDO.class
+com\nova\is\mas\model\LoginDO.class
+com\nova\is\mas\dao\ResourceDAO.class
+com\nova\is\mas\services\ResourceServices.class
+com\nova\is\mas\mapper\LoginMapper.class
+com\nova\is\mas\mapper\AppointmentMapper.class
