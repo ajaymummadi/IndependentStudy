@@ -12,6 +12,7 @@
 // UserDO userDO = (UserDO)session.getAttribute("user");
  
  String role = (String)request.getAttribute("role");
+ String userName = (String)request.getAttribute("userName");
 if (role.equalsIgnoreCase("recep")) {
 	response.sendRedirect("patientsum.htm");
 } else {

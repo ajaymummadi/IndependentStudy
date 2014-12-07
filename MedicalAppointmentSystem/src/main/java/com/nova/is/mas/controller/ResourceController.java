@@ -28,7 +28,8 @@ public class ResourceController extends MultiActionController {
 			HttpServletResponse response, LoginDO loginDO) throws Exception {
 		int numberOfRows = 0;
 		ModelAndView modelAndView = new ModelAndView();
-		HttpSession sess = (HttpSession)request.getSession(false);
+		HttpSession sess = (HttpSession)request.getSession(true);
+		sess.setAttribute("userName", loginDO.getUserName());
 		loginDO = resourceServices.validateUser(loginDO);
 		modelAndView.setViewName("index");
 		modelAndView.addObject("role", loginDO.getRole());

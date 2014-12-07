@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -98,7 +99,9 @@ public class PatientController extends MultiActionController{
 	public ModelAndView patientsumForNormalUser(HttpServletRequest request,
 			HttpServletResponse response, PatientDetailsDO projDetail) throws Exception { 
 		ModelAndView modelAndView = new ModelAndView();
-		String userName = (String) request.getAttribute("userName");
+		HttpSession sess = (HttpSession)request.getSession(false);
+		
+		String userName = (String) sess.getAttribute("userName");
 		List<AppointmentDO> appointmentList  = patientServices.getAppointments(userName);
 		modelAndView.addObject("appointments", appointmentList);
 		modelAndView.setViewName("patientsumForNormalUser");

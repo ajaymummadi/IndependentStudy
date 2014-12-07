@@ -16,7 +16,7 @@ public class PhysicianMapper implements RowMapper {
 		String firstName = resultSet.getString("firstname");
 		String specialization = resultSet.getString("specialization");
 		int fee = resultSet.getInt("fee");
-		long phoneNumber = resultSet.getInt("phone_number");
+		long phoneNumber = resultSet.getLong("phone_number");
 		PhysicianDO physicianDO = new PhysicianDO();
 		physicianDO.setPhysicianID(physicianID);
 		physicianDO.setLastName(lastName);
